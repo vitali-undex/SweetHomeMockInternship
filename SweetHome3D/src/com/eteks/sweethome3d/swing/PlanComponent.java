@@ -2029,10 +2029,11 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
         // Keep the interrupted status so that the print job can stop
         Thread.currentThread().interrupt();
       } catch (InvocationTargetException ex) {
+        // Rethrow the exception or error thrown while printing, as if it was printed in this thread
         if (ex.getCause() instanceof RuntimeException) {
           throw (RuntimeException)ex.getCause();
         } else {
-          throw new RuntimeException(ex.getCause());
+          throw (Error)ex.getCause();
         }
       }
       return pageExists [0];
